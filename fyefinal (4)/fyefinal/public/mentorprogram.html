@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+        
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            border-top: 3px solid #FFD700;
+        }
+        
+        .content-section {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .content-section h1 {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #0A1A4C;
+        }
+        
+        .program-card {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            gap: 20px;
+            width: 80%;
+        }
+
+        .program-card img {
+            max-width: 200px;
+            border-radius: 8px;
+        }
+
+        .program-card h2 {
+            font-size: 20px;
+            color: #0A1A4C;
+            margin: 0 0 10px;
+        }
+
+        .program-card p {
+            font-size: 14px;
+            color: #333;
+            margin: 0 0 10px;
+        }
+
+        .details-button {
+            background-color: #FFD700;
+            border: 1px solid #0A1A4C;
+            padding: 10px 20px;
+            color: #0A1A4C;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .details-button:hover {
+            background-color: #FFC107;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="mentormain.html" class="active">Home</a></li>
+                <li><a href="mentor-dashboard.html">Dashboard</a></li>
+                <li><a href="mentorabout.html">About Us</a></li>
+                <li><a href="mentorcontact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="content-section">
+        <h1>FYE Support Programs</h1>
+        
+        <div class="program-card">
+            <img src="peer.png" alt="Peer Tutoring Program">
+            <div>
+                <h2>Peer Tutoring Program</h2>
+                <p>Activities to develop students holistically, including orientation, peer mentoring, and support seminars.</p>
+                <button class="details-button" onclick="window.location.href='peerstudent.html'">Details</button>
+            </div>
+        </div>
+        
+        <div class="program-card">
+            <img src="mentoring.png" alt="Mentoring Program">
+            <div>
+                <h2>Mentoring Program</h2>
+                <p>Guidance and support through mentoring to help students adapt and succeed academically.</p>
+                <button class="details-button" onclick="showDetails('mentoring')">Details</button>
+            </div>
+        </div>
+
+        <div class="program-card">
+            <img src="peer.png" alt="Academic Support Workshops">
+            <div>
+                <h2>Academic Support Workshops</h2>
+                <p>Workshops focused on study skills, time management, and other academic supports.</p>
+                <button class="details-button" onclick="showDetails('supportWorkshops')">Details</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function showDetails(program) {
+            // Function to show more details about each program.
+            alert("Showing details for: " + program);
+        }
+
+        function logout() {
+            // Logout function to handle user logout
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

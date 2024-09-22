@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Announcement</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+
+        .announcement-section {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #0A1A4C;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .announcement-section h2 {
+            text-align: center;
+            color: #0A1A4C;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .announcement-section div {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .announcement-section input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .announcement-section textarea {
+            width: 96%;
+            height: 150px;
+            padding: 10px;
+            border: 2px solid #0A1A4C;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+            margin-bottom: 20px;
+        }
+
+        .announcement-section button {
+            background-color: #FFD700;
+            color: #0A1A4C;
+            padding: 10px 30px;
+            border: 1px solid #0A1A4C;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 3px solid #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="adminmain.html">Home</a></li>
+                <li><a href="admin-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="account-settings.html">Settings</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+
+    <div id="announcementSection" class="announcement-section">
+        <h2>Make an Announcement</h2>
+        <div>
+            <input type="radio" id="sendToMentors" name="announcementTarget" value="mentors" checked>
+            <label for="sendToMentors">Mentors</label>
+            <input type="radio" id="sendToTutors" name="announcementTarget" value="tutors">
+            <label for="sendToTutors">Tutors</label>
+        </div>
+        <textarea id="announcementText" placeholder="Enter your announcement here..."></textarea>
+        <button onclick="submitAnnouncement()">Submit Announcement</button>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function logout() {
+            window.location.href = 'index.html';
+        }
+
+        // Submit the announcement to the server
+        function submitAnnouncement() {
+            const announcementText = document.getElementById('announcementText').value;
+            const targetGroup = document.querySelector('input[name="announcementTarget"]:checked').value;
+
+            if (announcementText.trim()) {
+                const announcementData = {
+                    title: `Announcement for ${targetGroup}`,
+                    message: announcementText
+                };
+
+                fetch('/create-announcement', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(announcementData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert(`Announcement successfully submitted to ${targetGroup}.`);
+                        document.getElementById('announcementText').value = ''; // Clear the input
+                    } else {
+                        alert('Failed to submit announcement. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error submitting announcement:', error);
+                    alert('An error occurred while submitting the announcement.');
+                });
+            } else {
+                alert('Please enter an announcement.');
+            }
+        }
+    </script>
+</body>
+</html>

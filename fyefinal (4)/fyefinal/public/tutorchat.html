@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+        .chat-container {
+            width: 90%;
+            height: 600px;
+            background-color: #eef2f7;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 0 auto;
+            padding: 19px;
+        }
+        .chat-header {
+            background-color: #001f3f;
+            padding: 15px;
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header .group-name {
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        .chat-header .group-name span {
+            margin-left: 10px;
+        }
+        .chat-header .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .chat-header .nav-links a {
+            color: #ffdc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .message img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .message-content {
+            max-width: 70%;
+            background-color: #001f3f;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            position: relative;
+        }
+        .message-content:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -10px;
+            transform: translateY(-50%);
+            border-width: 10px;
+            border-style: solid;
+            border-color: transparent #001f3f transparent transparent;
+        }
+        .message.sent {
+            justify-content: flex-end;
+        }
+        .message.sent .message-content {
+            background-color: #004080;
+            align-self: flex-end;
+            border-radius: 20px 20px 0 20px;
+        }
+        .message.sent .message-content:before {
+            left: auto;
+            right: -10px;
+            border-color: transparent transparent transparent #004080;
+        }
+        .message .sender-name {
+            font-weight: bold;
+            font-size: 0.9em;
+            color: #ffdc00;
+        }
+        .message.sent .sender-name {
+            color: #004080;
+            text-align: right;
+        }
+        .chat-footer {
+            padding: 10px;
+            background-color: #001f3f;
+            display: flex;
+            align-items: center;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+        #message-input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: none;
+            margin-right: 10px;
+            font-size: 1em;
+        }
+        #file-btn, #send-btn {
+            background-color: transparent;
+            border: none;
+            color: #ffdc00;
+            font-size: 1.5em;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        #send-btn {
+            font-size: 1.2em;
+            background-color: #004080;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+        #file-input {
+            display: none;
+        }
+
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 3px solid #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="tutormain.html">Home</a></li>
+                <li><a href="tutor-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="account-settings.html">Settings</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="group-name">
+                <span>Mentorship Group</span>
+            </div>
+            <div class="nav-links">
+                <a href="mentorfile.html">Files</a>
+                <a href="mentorimages.html">Images</a>
+            </div>
+        </div>
+        <div class="chat-body" id="chat-body">
+            <!-- No initial messages -->
+        </div>
+
+        <div class="chat-footer">
+            <input type="text" id="message-input" placeholder="Type message">
+            <button id="file-btn">📎</button>
+            <input type="file" id="file-input" multiple>
+            <button id="send-btn">➤</button>
+        </div>
+    </div>
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('send-btn').addEventListener('click', function() {
+            sendMessage();
+        });
+
+        document.getElementById('message-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        document.getElementById('file-btn').addEventListener('click', function() {
+            document.getElementById('file-input').click();
+        });
+
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            if (message !== '') {
+                addMessage('You', message, 'sent');
+                input.value = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+    fetchMessages();
+});
+
+function fetchMessages() {
+    fetch('/messages')
+        .then(response => response.json())
+        .then(messages => {
+            messages.forEach(message => {
+                addMessage(message.sender, message.content, message.type);
+            });
+        })
+        .catch(error => console.error('Error fetching messages:', error));
+}
+
+function sendMessage() {
+    const input = document.getElementById('message-input');
+    const message = input.value.trim();
+    if (message !== '') {
+        addMessage('You', message, 'sent');
+        input.value = '';
+
+        fetch('/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ content: message, type: 'sent' })
+        })
+        .catch(error => console.error('Error sending message:', error));
+    }
+}
+
+function addMessage(sender, content, type) {
+    const chatBody = document.getElementById('chat-body');
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', type);
+
+    const senderElement = document.createElement('div');
+    senderElement.classList.add('sender-name');
+    senderElement.textContent = sender;
+
+    const contentElement = document.createElement('div');
+    contentElement.classList.add('message-content');
+    contentElement.textContent = content;
+
+    messageElement.appendChild(senderElement);
+    messageElement.appendChild(contentElement);
+
+    chatBody.appendChild(messageElement);
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+        document.getElementById('notificationsButton').addEventListener('click', function() {
+            const notificationsMenu = document.getElementById('notificationsMenu');
+            notificationsMenu.style.display = notificationsMenu.style.display === 'block' ? 'none' : 'block';
+        });
+    
+        document.getElementById('profile').addEventListener('click', function() {
+            const settingsMenu = document.getElementById('settingsMenu');
+            settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+        });
+    
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #calendar {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .fc-event {
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #0A1A4C;
+            color: #FFD700;
+            padding: 13px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0A1A4C;
+        }
+
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 3px solid #FFD700;
+        }
+
+        /* Event details panel */
+        #eventDetailsPanel {
+            display: none;
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            width: 300px;
+            background: #fff;
+            border: 1px solid #0A1A4C;
+            border-radius: 5px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1000;
+        }
+
+        #eventDetailsPanel h3 {
+            margin-top: 0;
+        }
+
+        #deleteEventButton {
+            background-color: red;
+            color: white;
+            margin-top: 10px;
+        }
+
+        /* Create event modal */
+        #createEventModal {
+            display: none;
+            position: fixed;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            background: #fff;
+            border: 1px solid #0A1A4C;
+            border-radius: 5px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1000;
+        }
+
+        #createEventModal h3 {
+            margin-top: 0;
+        }
+
+        #createEventModal input, #createEventModal textarea {
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+        }
+
+        #createEventModal button {
+            width: 100%;
+            padding: 5px;
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="adminmain.html">Home</a></li>
+                <li><a href="admin-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="account-settings.html">Settings</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="container">
+        <h1>Calendar</h1>
+        <button id="createEventButton">Create Event</button>
+        <div id="calendar"></div>
+    </div>
+
+    <div id="eventDetailsPanel">
+        <h3 id="eventTitle"></h3>
+        <p><strong>Date:</strong> <span id="eventDate"></span></p>
+        <p><strong>Time:</strong> <span id="eventTime"></span></p>
+        <p><strong>Description:</strong></p>
+        <p id="eventDescription"></p>
+        <button id="deleteEventButton">Delete Event</button>
+        <button id="closePanelButton">Close</button>
+    </div>
+
+    <div id="createEventModal">
+        <h3>Create Event</h3>
+        <form id="createEventForm">
+            <input type="text" id="eventTitleInput" placeholder="Event Title" required>
+            <input type="date" id="eventDateInput" required>
+            <input type="time" id="eventTimeInput" required>
+            <textarea id="eventDescriptionInput" placeholder="Event Description"></textarea>
+            <button type="submit">Create Event</button>
+        </form>
+        <button id="closeEventModal">Close</button>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            const eventDetailsPanel = document.getElementById('eventDetailsPanel');
+            const eventTitle = document.getElementById('eventTitle');
+            const eventDate = document.getElementById('eventDate');
+            const eventTime = document.getElementById('eventTime');
+            const eventDescription = document.getElementById('eventDescription');
+            const closePanelButton = document.getElementById('closePanelButton');
+            const deleteEventButton = document.getElementById('deleteEventButton');
+            
+            const createEventButton = document.getElementById('createEventButton');
+            const createEventModal = document.getElementById('createEventModal');
+            const closeEventModal = document.getElementById('closeEventModal');
+            const createEventForm = document.getElementById('createEventForm');
+            const eventTitleInput = document.getElementById('eventTitleInput');
+            const eventDateInput = document.getElementById('eventDateInput');
+            const eventTimeInput = document.getElementById('eventTimeInput');
+            const eventDescriptionInput = document.getElementById('eventDescriptionInput');
+
+            let selectedEventId = null;
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                editable: true,
+                selectable: true,
+                events: '/events', // Replace with the correct API endpoint or event data array
+                eventClick: function(info) {
+                    const { event } = info;
+                    eventTitle.textContent = event.title;
+                    eventDate.textContent = new Date(event.startStr).toLocaleDateString();
+                    eventTime.textContent = new Date(event.startStr).toLocaleTimeString();
+                    eventDescription.textContent = event.extendedProps.description || 'No description provided';
+                    eventDetailsPanel.style.display = 'block';
+                    selectedEventId = event.id;
+                }
+            });
+
+            calendar.render();
+
+            closePanelButton.addEventListener('click', function() {
+                eventDetailsPanel.style.display = 'none';
+            });
+
+            deleteEventButton.addEventListener('click', function() {
+                if (selectedEventId) {
+                    fetch(`/events/${selectedEventId}`, {
+                        method: 'DELETE'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            calendar.getEventById(selectedEventId).remove();
+                            eventDetailsPanel.style.display = 'none';
+                        } else {
+                            console.error('Failed to delete event');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+            });
+
+            createEventButton.addEventListener('click', function() {
+                createEventModal.style.display = 'block';
+            });
+
+            closeEventModal.addEventListener('click', function() {
+                createEventModal.style.display = 'none';
+            });
+
+            createEventForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const title = eventTitleInput.value;
+                const date = eventDateInput.value;
+                const time = eventTimeInput.value;
+                const description = eventDescriptionInput.value;
+                const start = new Date(date + 'T' + time).toISOString();
+
+                const event = { title, start, description };
+
+                fetch('/events', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(event)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Event created:', data);
+                    calendar.addEvent(event); // Add the new event to the calendar
+                    createEventModal.style.display = 'none';
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+
+        function logout() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

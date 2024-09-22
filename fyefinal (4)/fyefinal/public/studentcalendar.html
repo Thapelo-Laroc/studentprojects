@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        #calendar {
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .fc-event {
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #0A1A4C;
+            color: #FFD700;
+            padding: 13px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0A1A4C;
+        }
+
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 3px solid #FFD700;
+        }
+
+        /* Event details panel */
+        #eventDetailsPanel {
+            display: none;
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            width: 300px;
+            background: #fff;
+            border: 1px solid #0A1A4C;
+            border-radius: 5px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            z-index: 1000;
+        }
+
+        #eventDetailsPanel h3 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="studentmain.html">Home</a></li>
+                <li><a href="student-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="account-settings.html">Settings</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="container">
+        <h1>Calendar</h1>
+        <div id="calendar"></div>
+    </div>
+
+    <div id="eventDetailsPanel">
+        <h3 id="eventTitle"></h3>
+        <p><strong>Date:</strong> <span id="eventDate"></span></p>
+        <p><strong>Time:</strong> <span id="eventTime"></span></p>
+        <p><strong>Description:</strong></p>
+        <p id="eventDescription"></p>
+        <button id="closePanelButton">Close</button>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarEl = document.getElementById('calendar');
+            const eventDetailsPanel = document.getElementById('eventDetailsPanel');
+            const eventTitle = document.getElementById('eventTitle');
+            const eventDate = document.getElementById('eventDate');
+            const eventTime = document.getElementById('eventTime');
+            const eventDescription = document.getElementById('eventDescription');
+            const closePanelButton = document.getElementById('closePanelButton');
+            
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                editable: true,
+                selectable: true,
+                events: '/events', // Replace with the correct API endpoint or event data array
+                eventClick: function(info) {
+                    const { event } = info;
+                    eventTitle.textContent = event.title;
+                    eventDate.textContent = new Date(event.startStr).toLocaleDateString();
+                    eventTime.textContent = new Date(event.startStr).toLocaleTimeString();
+                    eventDescription.textContent = event.extendedProps.description || 'No description provided';
+                    eventDetailsPanel.style.display = 'block';
+                }
+            });
+
+            calendar.render();
+
+            closePanelButton.addEventListener('click', function() {
+                eventDetailsPanel.style.display = 'none';
+            });
+        });
+
+        function logout() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

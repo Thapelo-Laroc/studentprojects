@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0A1A4C;
+            color: #FFD700;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 270px;
+            max-width: 700px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+
+        .form-box {
+            width: 100%;
+            background: #1F2A4D;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            width: 80%;
+        }
+
+        h1 {
+            margin-bottom: 0px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            background-color: #1F2A4D;
+            color: #FFD700;
+            font-size: 14px;
+            outline: none;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+            border-color: #FFD700;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+        }
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #FFD700;
+            border: none;
+            color: #0A1A4C;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background-color: #e6c24b;;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="fyelogo.png" alt="FYE-Support Logo">
+        </div>
+        <form id="registrationForm">
+            <label for="usernumber">User Number</label>
+            <input type="text" id="usernumber" name="usernumber" required>
+
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+            <button type="submit">Register</button>
+            <p>Already have an account?<a href="index.html">Login</a></p>
+        </form>
+    </div>
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const usernumber = document.getElementById('usernumber').value;
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+    }
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ usernumber, username, email, password, role: 'student' }) // Ensure role is included
+    });
+    if (response.ok) {
+        alert('Registration successful. You can now log in.');
+        window.location.href = 'index.html'; 
+    } else {
+        alert('Registration failed');
+    }
+});
+
+
+    </script>
+</body>
+</html>

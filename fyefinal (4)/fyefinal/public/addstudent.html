@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Add Student</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color:#0A1A4C;
+            color:#FFD700;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color:#FFD700;
+            color:#0A1A4C;
+        }
+
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 3px solid #FFD700;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="mentormain.html">Home</a></li>
+                <li><a href="mentor-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="account-settings.html">Settings</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="container">
+        <h1>Add Student to Group</h1>
+
+        <form id="add-student-form">
+            <label for="userNumber">Student User Number</label>
+            <input type="text" id="userNumber" name="userNumber" placeholder="Enter student user number" required>
+
+            <label for="group">Select Group</label>
+            <select id="group" name="group" required>
+                <option value="">--Select Group--</option>
+                <option value="Group A">Group A</option>
+                <option value="Group B">Group B</option>
+                <option value="Group C">Group C</option>
+                <!-- Add more groups as necessary -->
+            </select>
+
+            <button type="submit">Add Student</button>
+        </form>
+
+        <p id="response-message" style="color: green; text-align: center;"></p>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Handle form submission to add student to group
+        document.getElementById('add-student-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const userNumber = document.getElementById('userNumber').value;
+            const group = document.getElementById('group').value;
+
+            // Ensure form validation before proceeding
+            if (!userNumber || !group) {
+                alert('Please fill in both fields before submitting.');
+                return;
+            }
+
+            const data = {
+    userNumber: userNumber,
+    group: group
+};
+
+fetch('/add-student-to-group', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+
+            .then(response => response.json())
+            .then(data => {
+                const responseMessage = document.getElementById('response-message');
+                if (data.success) {
+                    responseMessage.textContent = `Student with user number ${userNumber} added to ${group} successfully.`;
+                    responseMessage.style.color = 'green';
+                } else {
+                    responseMessage.textContent = `Error: ${data.message}`;
+                    responseMessage.style.color = 'red';
+                }
+            })
+            .catch(error => {
+                console.error('Error adding student to group:', error);
+                const responseMessage = document.getElementById('response-message');
+                responseMessage.textContent = 'There was an error adding the student. Please try again.';
+                responseMessage.style.color = 'red';
+            });
+        });
+    </script>
+</body>
+</html>

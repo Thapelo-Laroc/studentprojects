@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+
+        .dashboard {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .dashboard h1 {
+            font-size: 36px;
+            color: #0A1A4C;
+            margin-bottom: 60px;
+        }
+
+        .dashboard-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: white;
+            border: 1px solid #0A1A4C;
+            border-radius: 8px;
+            padding: 20px;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: box-shadow 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #0A1A4C;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .card-button {
+            background-color: #FFD700;
+            color: #0A1A4C;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-size: 14px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .card-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+
+        .enroll-tutorship {
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            border-top: 3px solid #FFD700;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 100%;
+            }
+        }
+
+        .notification-bell {
+            position: relative;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            margin-right: 20px;
+            background-color:#0A1A4C;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-bell::before {
+            content: '🔔'; 
+            font-size: 18px;
+            color: #0A1A4C;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="tutormain.html">Home</a></li>
+                <li><a href="tutor-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="account-settings.html">Settings</a></li>
+            </ul>
+        </nav>
+        <div style="display: flex; align-items: center;">
+            <button class="notification-bell" onclick="openNotifications()"></button>
+            <button class="logout-button" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <section class="dashboard">
+        <h1 id="welcomeMessage">Welcome!</h1>
+
+        <div class="dashboard-cards">
+            <div class="card">
+                <h2>Your Tutor Groups</h2>
+                <p>Connect with your peers and tutors.</p>
+                <a href="tutorsgroups.html" class="card-button">View Groups</a>
+
+            </div>
+
+            <div class="card">
+                <h2>Create and View Events</h2>
+                <p>See your calendar</p>
+                <a href="tutorcalendar.html" class="card-button">View Calendar</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${username}!`;
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        function openNotifications() {
+        const userId = localStorage.getItem('userId'); // Assuming you store user ID in local storage
+
+        fetch(`/notifications/${userId}`)
+            .then(response => response.json())
+            .then(notifications => {
+                if (notifications.length > 0) {
+                    alert(`You have ${notifications.length} new notifications!`);
+                    // You can also display these notifications in a dropdown or modal
+                } else {
+                    alert('No new notifications.');
+                }
+            })
+            .catch(error => console.error('Error fetching notifications:', error));
+    }
+
+        function logout() {
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

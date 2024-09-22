@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment for Tutorship</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+        .h2 {
+            font-size: 50px;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        input, select {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color:#0A1A4C;
+            color:#FFD700;
+            padding: 13px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color:#0A1A4C;
+        }
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 3px solid #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="studentmain.html">Home</a></li>
+                <li><a href="student-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="account-settings.html">Settings</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+    <h2>Tutorship Enrollment Form</h2>
+    <form action="/enroll" method="POST">
+        <label for="userNumber">User Number:</label>
+        <input type="text" id="username" name="username" placeholder="Username" readonly>
+
+        <label for="course">Course:</label>
+        <select id="course" name="course" required>
+            <option value="BICT">BICT</option>
+            <option value="DipICT">DipICT</option>
+            <option value="HICT">HICT</option>
+        </select>
+
+        <label for="year">Year of Study:</label>
+        <select id="year" name="year" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+        <label for="module">Module:</label>
+        <select id="module" name="module" required>
+            <!-- Options will be populated by JavaScript -->
+        </select>
+
+        <button type="submit">Enroll</button>
+    </form>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('welcomeMessage').textContent = `Hello, ${username}!`;
+
+                // Get initials from username
+                const initials = username.split(' ').map(name => name[0].toUpperCase()).join('');
+                document.getElementById('profile').textContent = initials;
+            } else {
+                window.location.href = 'index.html';
+            }
+
+            // Fetch tutors from the server and populate the module dropdown
+            try {
+                const response = await fetch('/get-tutors'); // API endpoint to fetch tutors
+                if (response.ok) {
+                    const tutors = await response.json();
+                    const moduleSelect = document.getElementById('module');
+                    moduleSelect.innerHTML = ''; // Clear existing options
+
+                    tutors.forEach(tutor => {
+                        const option = document.createElement('option');
+                        option.value = tutor.module;
+                        option.textContent = `${tutor.module} - ${tutor.name}`;
+                        moduleSelect.appendChild(option);
+                    });
+                } else {
+                    console.error('Failed to fetch tutors');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+        
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            border-top: 3px solid #FFD700;
+        }
+
+        .content-section {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6%;
+        }
+
+        .content-section h1 {
+            font-size: 36px;
+            color: #0A1A4C;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0A1A4C;
+        }
+
+        .contact-info {
+            background-color: #ffffff;
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-info h2 {
+            font-size: 28px;
+            color: #0A1A4C;
+            margin-bottom: 20px;
+            text-align:center;
+        }
+
+        .contact-info p {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="mentormain.html">Home</a></li>
+                <li><a href="mentor-dashboard.html">Dashboard</a></li>
+                <li><a href="mentorabout.html">About Us</a></li>
+                <li><a href="mentorcontact.html" class="active">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="content-section">
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <p>If you have any questions or need support, feel free to reach out to us. We are here to help!</p>
+            <p>Email: fyesupport@gmail.com</p>
+            <p>Phone: (123) 456-7890</p>
+            <p>Address: 123 University Road, Mbombela, South Africa</p>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function logout() {
+            // Logout function to handle user logout
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+        
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 3px solid #FFD700;
+        }
+
+        .content-section {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-section h1 {
+            font-size: 36px;
+            color: #0A1A4C;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0A1A4C;
+        }
+
+        .about-system {
+            background-color: #ffffff;
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-system h2 {
+            font-size: 28px;
+            color: #0A1A4C;
+            margin-bottom: 20px;
+        }
+
+        .about-system p {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .team-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 30px;
+            padding: 20px 0;
+            scroll-behavior: smooth;
+        }
+
+        .team-member {
+            flex: 0 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 270px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .team-member img {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 2px solid #FFD700;
+        }
+
+        .team-member h3 {
+            font-size: 20px;
+            color: #0A1A4C;
+            margin: 0 0 5px;
+        }
+
+        .team-member p {
+            font-size: 16px;
+            color: #666;
+            margin: 0;
+        }
+
+        .team-member:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="mentormain.html">Home</a></li>
+                <li><a href="mentor-dashboard.html">Dashboard</a></li>
+                <li><a href="mentorabout.html" class="active">About Us</a></li>
+                <li><a href="mentorcontact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+
+    <div class="content-section">
+        <div class="about-system">
+            <h2>About the System</h2>
+            <p>Our system is designed to enhance the first-year experience for students by providing a range of support programs, including peer tutoring, mentoring, and academic workshops. It aims to foster a supportive community and help students achieve academic success and personal growth.</p>
+        </div>
+
+        <h1>Meet the Team</h1>
+        <div class="team-container">
+            <div class="team-member">
+                <img src="team-member1.jpg" alt="Team Member 1">
+                <h3>Tebogo Mokgalabone</h3>
+                <p>Project Lead</p>
+            </div>
+            <div class="team-member">
+                <img src="team-member2.jpg" alt="Team Member 2">
+                <h3>Ndzalama Mkansi</h3>
+                <p>Lead Developer</p>
+            </div>
+            <div class="team-member">
+                <img src="team-member3.jpg" alt="Team Member 3">
+                <h3>Pride Masiku</h3>
+                <p>UX Designer</p>
+            </div>
+            <div class="team-member">
+                <img src="team-member4.jpg" alt="Team Member 4">
+                <h3>Unathi Yeko</h3>
+                <p>Backend Developer</p>
+            </div>
+            <div class="team-member">
+                <img src="team-member5.jpg" alt="Team Member 5">
+                <h3>Thoriso Phaswana</h3>
+                <p>Quality Assurance</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function logout() {
+            // Logout function to handle user logout
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

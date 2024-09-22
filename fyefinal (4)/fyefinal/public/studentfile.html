@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Files</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .files-container {
+            width: 90%;
+            height: 600px;
+            background-color: #eef2f7;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .chat-header {
+            background-color: #001f3f;
+            padding: 15px;
+            color: white;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header .group-name {
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header .group-name span {
+            margin-left: 10px;
+        }
+
+        .files-container h2 {
+            color: #001f3f;
+            text-align: center;
+        }
+
+        .file-item {
+            background-color: #001f3f;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .file-item a {
+            color: #ffdc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .file-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="group-name">
+                <div class="group-icon" style="background-color: #ffdc00; border-radius: 50%; width: 30px; height: 30px;"></div>
+                <span>Mentorship Group</span>
+            </div>
+    <div class="files-container">
+        <h2>Shared Files</h2>
+        <!-- List of files -->
+        <div class="file-item">
+            <span>No files shared yet</span>
+            
+        </div>
+        
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Registration Form</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #F8F9FA;
+            color: #333;
+        }
+
+        .main-header {
+            background-color: #0A1A4C;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .main-header img {
+            height: 60px;
+            border-radius: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+        }
+
+        nav ul li a.active {
+            border-bottom: 3px solid #FFD700;
+        }
+
+        .logout-button {
+            background-color: #FFD700;
+            border: none;
+            padding: 12px 24px;
+            color: #0A1A4C;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #0A1A4C;
+            color: #FFD700;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 20px auto;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color:#0A1A4C;
+            font-size: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input:focus {
+            border-color: #0A1A4C;
+            outline: none;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0A1A4C;
+            border: none;
+            border-radius: 4px;
+            color:#FFD700;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color:  #0A1A4C;
+        }
+        .main-footer {
+            background-color: #0A1A4C;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 3px solid #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <img src="fyelogo.png" alt="FYE-Support Logo">
+        <nav>
+            <ul>
+                <li><a href="adminmain.html">Home</a></li>
+                <li><a href="admin-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="account-settings.html">Settings</a></li>
+            </ul>
+        </nav>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
+    <form id="tutorForm" method="post" action="/add-tutor">
+        <h2>Tutor Registration</h2>
+        <div class="form-group">
+            <label for="usernumber">User Number</label>
+            <input type="text" id="usernumber" name="usernumber" required>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="course">Course</label>
+            <input type="text" id="course" name="course" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Add Tutor</button>
+        </div>
+    </form>
+    
+    <footer class="main-footer">
+        <p>&copy; 2024 FYE Support. All Rights Reserved.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const username = localStorage.getItem('username');
+            if (username) {
+                document.getElementById('welcomeMessage').textContent = `Hello, ${username}!`;
+
+                // Get initials from username
+                const initials = username.split(' ').map(name => name[0].toUpperCase()).join('');
+                document.getElementById('profile').textContent = initials;
+            } else {
+                window.location.href = 'index.html';
+            }
+        });
+
+        document.getElementById('notificationsButton').addEventListener('click', function() {
+            const notificationsMenu = document.getElementById('notificationsMenu');
+            notificationsMenu.style.display = notificationsMenu.style.display === 'block' ? 'none' : 'block';
+        });
+    
+        document.getElementById('profile').addEventListener('click', function() {
+            const settingsMenu = document.getElementById('settingsMenu');
+            settingsMenu.style.display = settingsMenu.style.display === 'block' ? 'none' : 'block';
+        });
+    
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        });
+
+        document.getElementById('tutorForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        const response = await fetch('/add-tutor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Show success message
+                window.location.href = result.redirect; // Redirect to dashboard
+            } else {
+                alert(result.message); // Show error message
+            }
+        } else {
+            alert('Unexpected response from the server.');
+            console.error('Unexpected content-type:', contentType);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    }
+});
+
+    </script>
+</body>
+</html>
